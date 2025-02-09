@@ -11,10 +11,12 @@ jobs:
         steps:
             - name: "checkout repository"
               uses: actions/checkout@v2
+            
+            - name: "get node version"
+              run: node -v
 
-            - name: "list folders"
-              run: ls -la
-        # - install dependencies 
+            # - name: "install dependencies"
+            #   run: npm install
         # - run code analysis
     # unit testing
     # build and push

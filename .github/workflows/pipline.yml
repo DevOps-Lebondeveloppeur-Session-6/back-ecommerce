@@ -36,13 +36,10 @@ jobs:
         steps:
             - name: "checkout repository"
               uses: actions/checkout@v2
-            
-            - name: "check docker version"
-              run: |
-               docker --version
-               docker images
 
+            - name: "build Docker image"
+              run: docker build -t talel12/e-commerce-back .
 
-            # - name: "build Docker image"
-            #   run: docker build -t talel12/e-commerce-back .
+            - name: "list docker images"
+              run: docker images
     # deployment

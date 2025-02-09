@@ -11,7 +11,9 @@ jobs:
         steps:
             - name: "checkout repository"
               uses: actions/checkout@v2
-    
+
+            - name: "list folders"
+              run: ls -la
         # - install dependencies 
         # - run code analysis
     # unit testing

@@ -53,8 +53,8 @@ jobs:
               run: docker push talel12/e-commerce-back
 
             - name: "tag image"
-              run: docker tag talel12/e-commerce-back talel12/e-commerce-back:1
+              run: docker tag talel12/e-commerce-back talel12/e-commerce-back:${{ github.run_number }}
 
             - name: "push tagged image"
-              run: docker push talel12/e-commerce-back:1
+              run: docker push talel12/e-commerce-back:${{ github.run_number }}
     # deployment

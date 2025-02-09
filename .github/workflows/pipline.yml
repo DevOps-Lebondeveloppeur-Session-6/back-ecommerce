@@ -1,0 +1,19 @@
+name: "workflow backend"
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    code_analysis_jobs:
+        runs-on: ubuntu-latest
+        steps:
+            - name: "checkout repository"
+              uses: actions/checkout@v2
+    
+        # - install dependencies 
+        # - run code analysis
+    # unit testing
+    # build and push
+    # deployment

@@ -30,8 +30,19 @@ jobs:
             - name: "run code quality tests"
               run: npm run test
 
+    build_and_push:
+        runs-on: ubuntu-latest
+        needs: [ "unit_testing_job", "code_analysis_job" ]
+        steps:
+            - name: "checkout repository"
+              uses: actions/checkout@v2
             
-            
-        # unit testing
-    # build and push
+            - name: "check docker version"
+              run: |
+               docker --version
+               docker images
+
+
+            # - name: "build Docker image"
+            #   run: docker build -t talel12/e-commerce-back .
     # deployment

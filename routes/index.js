@@ -8,13 +8,13 @@ const api = `/${apiURL}`;
 
 // Welcome route
 router.get('/', (req, res) => {
-    res.json({ message: 'Welcome to the API eeeeeeeeeee ! ***' });
+    res.json({ message: 'Welcome to the API !' });
 });
 
 
 // Test route
 router.get('/test', (req, res) => {
-  res.json({ message: 'Welcome to the API eeeeeeeeee !' });
+  res.json({ message: 'Welcome to the API !' });
 });
 
 

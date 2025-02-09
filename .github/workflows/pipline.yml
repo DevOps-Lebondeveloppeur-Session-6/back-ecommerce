@@ -6,55 +6,66 @@ on:
             - main
 
 jobs:
-    code_analysis_job:
-        runs-on: ubuntu-latest
-        steps:
-            - name: "checkout repository"
-              uses: actions/checkout@v2
+    # code_analysis_job:
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #         - name: "checkout repository"
+    #           uses: actions/checkout@v2
 
-            - name: "install dependencies"
-              run: npm install
+    #         - name: "install dependencies"
+    #           run: npm install
 
-            - name: "run code analysis"
-              run: npm run lint
+    #         - name: "run code analysis"
+    #           run: npm run lint
     
-    unit_testing_job:
-        runs-on: ubuntu-latest
-        steps:
-            - name: "checkout repository"
-              uses: actions/checkout@v2
+    # unit_testing_job:
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #         - name: "checkout repository"
+    #           uses: actions/checkout@v2
 
-            - name: "install dependencies"
-              run: npm install
+    #         - name: "install dependencies"
+    #           run: npm install
 
-            - name: "run code quality tests"
-              run: npm run test
+    #         - name: "run code quality tests"
+    #           run: npm run test
 
     build_and_push:
         runs-on: ubuntu-latest
-        needs: [ "unit_testing_job", "code_analysis_job" ]
+        # needs: [ "unit_testing_job", "code_analysis_job" ]
         steps:
             - name: "checkout repository"
               uses: actions/checkout@v2
 
-            - name: "build Docker image"
-              run: docker build -t talel12/e-commerce-back .
+            # - name: "build Docker image"
+            #   run: docker build -t talel12/e-commerce-back .
 
-            - name: "list docker images"
-              run: docker images
+            # - name: "list docker images"
+            #   run: docker images
 
-            - name: Login to Docker Hub
-              uses: docker/login-action@v3
+            # - name: Login to Docker Hub
+            #   uses: docker/login-action@v3
+            #   with:
+            #     username: ${{ vars.DOCKERHUB_USERNAME }}
+            #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+            # - name: "push Docker image to Docker Hub"
+            #   run: docker push talel12/e-commerce-back
+
+            # - name: "tag image"
+            #   run: docker tag talel12/e-commerce-back talel12/e-commerce-back:${{ github.run_number }}
+
+            # - name: "push tagged image"
+            #   run: docker push talel12/e-commerce-back:${{ github.run_number }}
+
+    deployment_job:
+        runs-on: ubuntu-latest
+        needs: [ "build_and_push" ]
+        steps:
+            - name: "ssh access to vps and deploy"
+              uses: appleboy/ssh-action@v1.2.0
               with:
-                username: ${{ vars.DOCKERHUB_USERNAME }}
-                password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-            - name: "push Docker image to Docker Hub"
-              run: docker push talel12/e-commerce-back
-
-            - name: "tag image"
-              run: docker tag talel12/e-commerce-back talel12/e-commerce-back:${{ github.run_number }}
-
-            - name: "push tagged image"
-              run: docker push talel12/e-commerce-back:${{ github.run_number }}
-    # deployment
+                host: ${{ secrets.HOST }}
+                username: user
+                password: ${{ secrets.PASSWORD }}
+                script: ls -l

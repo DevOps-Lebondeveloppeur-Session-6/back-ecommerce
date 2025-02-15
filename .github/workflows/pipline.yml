@@ -27,8 +27,15 @@ jobs:
             - name: "install dependencies"
               run: npm install
 
-            - name: "run code quality tests"
-              run: npm run test
+            - name: Run unit tests and generate report
+              run: |
+                    mkdir -p test-reports
+                    npm test -- --json --outputFile=test-reports/test-report.json
+
+            - uses: actions/upload-artifact@v3
+              with:
+                name: test-report
+                path: test-reports/test-report.json
 
     build_and_push:
         runs-on: ubuntu-latest
@@ -40,9 +47,6 @@ jobs:
             - name: "build Docker image"
               run: docker build -t talel12/e-commerce-back .
 
-            - name: "list docker images"
-              run: docker images
-
             - name: Login to Docker Hub
               uses: docker/login-action@v3
               with:
@@ -50,7 +54,7 @@ jobs:
                 password: ${{ secrets.DOCKERHUB_TOKEN }}
 
             - name: "push Docker image to Docker Hub"
-              run: docker push talel12/e-commerce-back
+              run: docker push talel12/e-commerce-back:late
 
             - name: "tag image"
               run: docker tag talel12/e-commerce-back talel12/e-commerce-back:${{ github.run_number }}

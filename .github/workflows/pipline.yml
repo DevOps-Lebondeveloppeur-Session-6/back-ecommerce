@@ -31,8 +31,7 @@ jobs:
               run: |
                     mkdir -p test-reports
                     npm test -- --json --outputFile=test-reports/test-report.json
-                    exit_code=$?  # Capture test exit status
-                    echo "TEST_EXIT_CODE=$exit_code" >> $GITHUB_ENV
+                    echo "TEST_EXIT_CODE=$?" >> $GITHUB_ENV
               continue-on-error: true  # Ensure the workflow continues after test failure
 
             - name: Upload test report as artifact

@@ -31,12 +31,22 @@ jobs:
               run: |
                     mkdir -p test-reports
                     npm test -- --json --outputFile=test-reports/test-report.json
+                    exit_code=$?  # Capture test exit status
+                    echo "TEST_EXIT_CODE=$exit_code" >> $GITHUB_ENV
+              continue-on-error: true  # Ensure the workflow continues after test failure
 
             - name: Upload test report as artifact
               uses: actions/upload-artifact@v4
               with:
                 name: test-report
                 path: test-reports/test-report.json
+
+            - name: "Fail workflow if tests failed"
+              run: |
+                if [ "$TEST_EXIT_CODE" -ne 0 ]; then
+                  echo "Tests failed, failing the workflow"
+                  exit 1
+                fi
 
     build_and_push:
         runs-on: ubuntu-latest

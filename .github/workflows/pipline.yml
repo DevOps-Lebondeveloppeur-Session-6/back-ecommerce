@@ -41,9 +41,9 @@ jobs:
             
             - name: Check test results and fail if tests failed
               run: |
-                    if grep -q '"numFailedTestSuites": [1-9]' test-reports/test-report.json || grep -q '"numFailedTests": [1-9]' test-reports/test-report.json; then
-                      echo "Unit tests failed!"
-                      exit 1
+                    if grep -q '"status": "failed"' test-reports/test-report.json; then
+                        echo "Unit tests failed!"
+                        exit 1
                     else
                         echo "All unit tests passed!"
                     fi

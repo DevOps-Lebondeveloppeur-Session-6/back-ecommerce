@@ -55,7 +55,7 @@ jobs:
                 password: ${{ secrets.DOCKERHUB_TOKEN }}
 
             - name: "push Docker image to Docker Hub"
-              run: docker push talel12/e-commerce-back:late
+              run: docker push talel12/e-commerce-back
 
             - name: "tag image"
               run: docker tag talel12/e-commerce-back talel12/e-commerce-back:${{ github.run_number }}

@@ -32,7 +32,8 @@ jobs:
                     mkdir -p test-reports
                     npm test -- --json --outputFile=test-reports/test-report.json
 
-            - uses: actions/upload-artifact@v3
+            - name: Upload test report as artifact
+              uses: actions/upload-artifact@v3
               with:
                 name: test-report
                 path: test-reports/test-report.json

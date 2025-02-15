@@ -33,7 +33,7 @@ jobs:
                     npm test -- --json --outputFile=test-reports/test-report.json
 
             - name: Upload test report as artifact
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                 name: test-report
                 path: test-reports/test-report.json

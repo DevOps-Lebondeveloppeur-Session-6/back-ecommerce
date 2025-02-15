@@ -41,10 +41,14 @@ jobs:
             
             - name: Check test results and fail if tests failed
               run: |
-                  if grep -q '"failed": [1-9]' test-reports/test-report.json; then
+                    if grep -q '"numFailedTestSuites": [1-9]' test-reports/test-report.json || grep -q '"numFailedTests": [1-9]' test-reports/test-report.json; then
                       echo "Unit tests failed!"
                       exit 1
-                  fi
+                    else
+                        echo "All unit tests passed!"
+                    fi
+              shell: /usr/bin/bash -e {0}
+
     build_and_push:
         runs-on: ubuntu-latest
         needs: [ "unit_testing_job", "code_analysis_job" ]

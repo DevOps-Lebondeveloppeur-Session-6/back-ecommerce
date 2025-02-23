@@ -8,12 +8,14 @@ services:
     ports:
       - 3000:3000
     build: .
+    env_file:
+     - .env
     environment:
       - MONGO_URI=mongodb://mongodb-user:mongodb-pass@mongo:27017/db-ecommerce?authSource=admin
       - PORT=3000
     command: ["sh", "-c", "yarn run seed:db hello@lebondeveloppeur.com admin123 && yarn start"]
 
-  mongo:
+  mongo-service:
     image: mongo
     restart: always
     environment:
